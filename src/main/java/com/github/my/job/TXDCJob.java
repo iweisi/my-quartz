@@ -16,12 +16,11 @@ public class TXDCJob extends BaseJob {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        String serverId = String.valueOf(context.get("serverId"));
         String id = runId();
-        System.out.println("******************************TXDCJob Start " + serverId + "  " + id + "  " + now() + "******************************");
+        System.out.println("******************************TXDCJob Start " + id + "  " + now() + "******************************");
         boolean s = true;
         while (s) {
-            System.out.println("******************************TXDCJob Runing " + serverId + "  " + id + "  " + now() + "******************************");
+            System.out.println("******************************TXDCJob Runing " + id + "  " + now() + "******************************");
             try {
                 Thread.sleep(1000L * 30);
             } catch (Exception e) {

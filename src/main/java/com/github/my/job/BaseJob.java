@@ -18,6 +18,7 @@ public abstract class BaseJob implements Job {
 
     /**
      * 执行时间
+     *
      * @return
      */
     public String now() {
@@ -30,6 +31,7 @@ public abstract class BaseJob implements Job {
 
     /**
      * 当前执行的id
+     *
      * @return
      */
     public String runId() {
