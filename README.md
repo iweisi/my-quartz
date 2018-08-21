@@ -4,6 +4,21 @@
 
 ## 1.任务调度原理
 QuartzSchedulerThread
+
+1.获取待执行的触发器
+
+每次任务执行只有一个实例取得执行权限,基于qrtz_locks表，联合主键SCHED_NAME（实例名称），LOCK_NAME(锁名称)
+
+基于DB for update实现 核心类StdRowLockSemaphore
+
+需要设置事务手动提交,获取锁的时候先for update查询
+
+有记录则返回说明已经获取到锁，没有则新增然后返回
+
+然后把锁名称(TRIGGER_ACCESS)绑定到ThreadLocal，然后执行回调(获取并更新触发器状态)
+
+然后提交,最后关闭连接，把锁名称从ThreadLocal移除
+
 JobRunShell
 
 
@@ -46,16 +61,4 @@ ClusterManager 定时按照如下方式检查
 
 如果检查有问题则signalSchedulingChangeImmediately
 
-2.数据库悲观锁实现原理
 
-每次任务执行只有一个实例取得执行权限,基于qrtz_locks表，联合主键SCHED_NAME（实例名称），LOCK_NAME(锁名称)
-
-基于DB for update实现 核心类StdRowLockSemaphore
-
-需要设置事务手动提交,获取锁的时候先for update查询
-
-有记录则返回说明已经获取到锁，没有则新增然后返回
-
-然后把锁名称(TRIGGER_ACCESS)绑定到ThreadLocal，然后执行回调(获取并更新触发器状态)
-
-然后提交,最后关闭连接，把锁名称从ThreadLocal移除
