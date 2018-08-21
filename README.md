@@ -27,6 +27,7 @@ ClusterManager 定时按照如下方式检查
 线程休眠一会儿
 执行检查manage
 如果检查有问题则signalSchedulingChangeImmediately
+
 2.数据库悲观锁实现原理
 每次任务执行只有一个实例取得执行权限,基于qrtz_locks表，联合主键SCHED_NAME（实例名称），LOCK_NAME(锁名称)
 基于DB for update实现 核心类StdRowLockSemaphore
