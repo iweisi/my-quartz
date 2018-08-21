@@ -15,11 +15,21 @@ QuartzSchedulerThread
 
 有记录则返回说明已经获取到锁，没有则新增然后返回
 
-然后把锁名称(TRIGGER_ACCESS)绑定到ThreadLocal，然后执行回调(获取并更新触发器状态)
+然后把锁名称(TRIGGER_ACCESS)绑定到ThreadLocal，然后执行回调(获取并更新触发器状态
+把qrtz_triggers状态从WAITING改成ACQUIRED
+插入qrtz_fired_triggers记录,状态为ACQUIRED
+
+)
 
 然后提交,最后关闭连接，把锁名称从ThreadLocal移除
 
-JobRunShell
+JobRunShell 开始执行
+更改qrtz_fired_triggers记录状态为EXECUTING,
+如果job是单线程的则qrtz_triggers原状态改为WAITING或ACQUIRED的改成 BLOCKED，原状态PAUSED的改成PAUSED_BLOCKED
+
+如果不是单线程的改成WAITING
+
+JobRunShell执行完毕删除qrtz_fired_triggers记录
 
 
 ## 2.集群原理(节点自动注册与失效转移)
