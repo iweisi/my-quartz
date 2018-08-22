@@ -3,7 +3,8 @@
 
 
 ## 1.任务调度原理
-QuartzSchedulerThread
+QuartzSchedulerThread(单线程轮询)
+
 
 1.获取待执行的触发器
 
