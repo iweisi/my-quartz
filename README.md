@@ -18,16 +18,20 @@ QuartzSchedulerThread
 然后把锁名称(TRIGGER_ACCESS)绑定到ThreadLocal，然后执行回调(获取并更新触发器状态
 把qrtz_triggers状态从WAITING改成ACQUIRED
 插入qrtz_fired_triggers记录,状态为ACQUIRED
-
 )
 
 然后提交,最后关闭连接，把锁名称从ThreadLocal移除
 
-JobRunShell 开始执行
+2.执行获取到的触发器
+获取悲观锁，成功则
 更改qrtz_fired_triggers记录状态为EXECUTING,
 如果job是单线程的则qrtz_triggers原状态为WAITING或ACQUIRED的改成 BLOCKED，原状态PAUSED的改成PAUSED_BLOCKED
 
 如果不是单线程的改成WAITING
+
+初始化JobRunShell，重新new job，JobRunShell放入线程池
+
+执行job
 
 JobRunShell执行完毕
 如果job是单线程的则qrtz_triggers原状态为BLOCKED的改成WAITING ，原状态PAUSED_BLOCKED的改成PAUSED
