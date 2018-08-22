@@ -1,4 +1,4 @@
-# quartz实现原理研究
+# quartz集群实现原理揭秘
 
 
 
@@ -23,8 +23,8 @@ QuartzSchedulerThread
 然后提交,最后关闭连接，把锁名称从ThreadLocal移除
 
 2.执行获取到的触发器
-获取悲观锁，成功则
-更改qrtz_fired_triggers记录状态为EXECUTING,
+
+获取悲观锁，成功则更改qrtz_fired_triggers记录状态为EXECUTING,
 如果job是单线程的则qrtz_triggers原状态为WAITING或ACQUIRED的改成 BLOCKED，原状态PAUSED的改成PAUSED_BLOCKED
 
 如果不是单线程的改成WAITING
