@@ -37,8 +37,6 @@ QuartzSchedulerThread(单线程轮询)
 JobRunShell执行完毕
 如果job是单线程的则qrtz_triggers原状态为BLOCKED的改成WAITING ，原状态PAUSED_BLOCKED的改成PAUSED
 
-如果不是单线程的改成WAITING
-
 删除qrtz_fired_triggers记录
 
 
